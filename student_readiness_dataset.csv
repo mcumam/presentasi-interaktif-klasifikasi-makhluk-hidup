@@ -1,0 +1,21 @@
+student_id,name,readiness_score,age,gender,father_education,mother_education,paud_experience
+1,Ahmad Rizki,85,5.5,L,S1,S2,Ya
+2,Siti Nurhaliza,65,5.0,P,S2,SMA,Ya
+3,Budi Santoso,85,6.0,L,SMA,S1,Ya
+4,Dewi Putri,65,5.0,P,SMP,SD,Tidak
+5,Eko Prasetyo,85,6.5,L,SMP,SMP,Ya
+6,Fitri Handayani,75,6.0,L,SD,SMP,Ya
+7,Galih Pratama,85,6.0,P,S2,S1,Ya
+8,Hana Safira,85,7.0,L,SD,SD,Ya
+9,Irfan Hakim,65,6.0,P,SD,SD,Tidak
+10,Jasmine Putri,85,6.5,L,S1,S1,Ya
+11,Kevin Wijaya,75,6.0,P,SMP,SMP,Ya
+12,Lina Marlina,75,6.5,L,SMP,SD,Tidak
+13,Muhammad Ali,85,6.0,P,D3,SMA,Ya
+14,Nadia Safitri,85,6.0,L,S2,S1,Ya
+15,Oscar Putra,65,6.0,P,SMP,SMP,Tidak
+16,Putri Indah,85,7.0,L,SMA,SMA,Ya
+17,Qori Amalia,75,6.0,P,SD,SMP,Ya
+18,Rafi Ahmad,85,5.0,L,S1,S2,Ya
+19,Sarah Azzahra,65,6.0,P,SD,SD,Tidak
+20,Tegar Prakoso,85,6.0,L,S1,S1,Ya
