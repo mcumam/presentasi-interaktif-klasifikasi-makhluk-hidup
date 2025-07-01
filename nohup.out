@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/project/sandbox/user-workspace/app.py", line 1, in <module>
+    from flask import Flask, render_template, request, jsonify, send_file, redirect, url_for, session
+ModuleNotFoundError: No module named 'flask'
+ * Serving Flask app 'app'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://172.17.0.2:8080
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 109-657-778
+127.0.0.1 - - [25/Jun/2025 18:42:23] "[32mGET / HTTP/1.1[0m" 302 -
+127.0.0.1 - - [25/Jun/2025 18:42:23] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [25/Jun/2025 18:44:45] "[32mGET / HTTP/1.1[0m" 302 -
+127.0.0.1 - - [25/Jun/2025 18:44:46] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [25/Jun/2025 18:45:42] "[32mPOST /login HTTP/1.1[0m" 302 -
+127.0.0.1 - - [25/Jun/2025 18:45:42] "GET /predictor HTTP/1.1" 200 -
+127.0.0.1 - - [26/Jun/2025 07:51:33] "[32mGET /logout HTTP/1.1[0m" 302 -
+127.0.0.1 - - [26/Jun/2025 08:03:17] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [29/Jun/2025 09:52:20] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [30/Jun/2025 07:39:54] "GET /login HTTP/1.1" 200 -
