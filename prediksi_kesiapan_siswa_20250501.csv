@@ -1,0 +1,12 @@
+name,age,gender,father_education,mother_education,paud_experience,prediction,readiness_level,timestamp
+Reviewer Jikap,6.0 tahun,P,SMP,SMP,Tidak,65.0,Belum Siap,2025-05-01 16:40:03
+Reviewer Jikap,6.0 tahun,P,SMP,SMP,Ya,75.0,Cukup Siap,2025-05-01 16:40:10
+Reviewer Jikap,6.0 tahun,P,Tidak Sekolah,SMP,Ya,75.0,Cukup Siap,2025-05-01 16:40:18
+Reviewer Jikap,6.0 tahun,P,SD,SMP,Ya,75.0,Cukup Siap,2025-05-01 16:40:22
+Reviewer Jikap,6.0 tahun,P,SD,SMP,Ya,75.0,Cukup Siap,2025-05-01 16:40:23
+Reviewer Jikap,6.0 tahun,P,SD,S1,Ya,75.0,Cukup Siap,2025-05-01 16:40:28
+Reviewer Jikap,6.0 tahun,P,SD,S1,Ya,75.0,Cukup Siap,2025-05-01 16:40:29
+Reviewer Jikap,6.0 tahun,P,SD,S1,Tidak,65.0,Belum Siap,2025-05-01 16:40:33
+Reviewer Jikap,6.0 tahun,P,SD,SD,Ya,75.0,Cukup Siap,2025-05-01 16:40:59
+Reviewer Jikap,6.0 tahun,P,SD,SD,Ya,75.0,Cukup Siap,2025-05-01 16:40:59
+Reviewer Jikap,6.0 tahun,P,SD,SD,Ya,75.0,Cukup Siap,2025-05-01 16:41:00
