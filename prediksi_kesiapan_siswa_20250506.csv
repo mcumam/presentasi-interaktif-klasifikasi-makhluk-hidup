@@ -1,0 +1,4 @@
+name,age,gender,father_education,mother_education,paud_experience,prediction,readiness_level,timestamp
+dafi,6.0 tahun,L,S1,S1,Ya,85.0,Siap,2025-05-06 06:07:36
+dafi,6.0 tahun,L,SMP,S1,Tidak,65.0,Belum Siap,2025-05-06 06:07:54
+dafi,6.0 tahun,P,SMP,S1,Tidak,65.0,Belum Siap,2025-05-06 06:09:40
