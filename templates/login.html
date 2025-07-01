@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistem Prediksi Kesiapan Siswa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .logo-uns {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-600 to-blue-700 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md">
+        <div class="bg-blue-700 rounded-lg shadow-xl overflow-hidden">
+            <!-- Header with Logo -->
+            <div class="bg-blue-700 py-6 px-8 text-center border-b border-blue-200">
+                <img src="https://adp.fkip.uns.ac.id/wp-content/uploads/2021/07/logo_putih.png" alt="UNS Logo" class="logo-uns">
+                <div class="space-y-2 mt-4">
+                    <h1 class="text-2xl font-bold text-white">
+                        Sistem Prediksi Enterprise
+                    </h1>
+                    <h1 class="text-2xl font-bold text-white">
+                        Kesiapan Siswa
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <div class="p-8 bg-blue-700">
+                <form id="loginForm" class="space-y-6" method="POST" action="/login">
+                    {% if error %}
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-700">{{ error }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-white">Username</label>
+                        <input type="text" id="username" name="username" required
+                               class="mt-1 block w-full px-3 py-2 bg-blue-600 border border-blue-500 rounded-md shadow-sm text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-white">Password</label>
+                        <input type="password" id="password" name="password" required
+                               class="mt-1 block w-full px-3 py-2 bg-blue-600 border border-blue-500 rounded-md shadow-sm text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+                            Login
+                        </button>
+                    </div>
+                </form>
+                <div class="mt-4 text-center">
+                    <p class="text-xs text-white">Managed By Universitas Sebelas Maret</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
