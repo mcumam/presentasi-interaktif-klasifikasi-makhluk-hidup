@@ -1,0 +1,18 @@
+{
+  "name": "klasifikasi-makhluk-hidup-sma",
+  "version": "1.0.0",
+  "description": "Presentasi interaktif klasifikasi makhluk hidup untuk biologi SMA.",
+  "main": "src/main.jsx",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "vite"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
