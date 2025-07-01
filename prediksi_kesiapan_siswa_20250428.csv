@@ -1,0 +1,6 @@
+name,age,gender,father_education,mother_education,paud_experience,prediction,readiness_level,timestamp
+Muhammad Choerul Umam,6.0 tahun,L,SMA,D3,Ya,100,Sangat Siap,2025-04-28 04:23:57
+vano,6.0 tahun,L,S1,S1,Ya,100,Sangat Siap,2025-04-28 04:25:13
+vano,6.0 tahun,L,SD,SD,Tidak,45.0,Belum Siap,2025-04-28 04:25:42
+a,6.0 tahun,L,S1,S1,Ya,100,Sangat Siap,2025-04-28 05:47:49
+nbjnn,5.0 tahun,L,SD,SD,Ya,55.0,Belum Siap,2025-04-28 05:49:06
