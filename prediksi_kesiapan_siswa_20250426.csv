@@ -1,0 +1,5 @@
+name,age,gender,father_education,mother_education,paud_experience,prediction,readiness_level,timestamp
+Muhammad,6.0 tahun,P,SMA,SD,Tidak,50.0,Belum Siap,2025-04-26 11:30:22
+Ahsan,5.5 tahun,P,S1,SMA,Tidak,72.0,Cukup Siap,2025-04-26 11:31:52
+Ahsan,5.5 tahun,L,S1,SMA,Tidak,72.0,Cukup Siap,2025-04-26 11:31:59
+Muhammad Choerul Umam,7.0 tahun,L,SD,SD,Ya,55.0,Belum Siap,2025-04-26 11:49:46
