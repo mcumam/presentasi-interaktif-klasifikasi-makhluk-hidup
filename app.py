@@ -7,14 +7,34 @@ from sklearn.preprocessing import LabelEncoder
 import csv
 from datetime import datetime
 import os
+import secrets
+import joblib
+import numpy as np
 
 # Initialize Flask app
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-here'  # Required for session management
+# Generate secure secret key or use environment variable
+app.secret_key = os.environ.get('SECRET_KEY') or secrets.token_hex(32)
 
-# Login credentials
-VALID_USERNAME = "admin"
-VALID_PASSWORD = "12345678"
+# Login credentials - should be moved to environment variables in production
+VALID_USERNAME = os.environ.get('ADMIN_USERNAME') or "admin"
+VALID_PASSWORD = os.environ.get('ADMIN_PASSWORD') or "12345678"
+
+# Load trained model and encoders
+try:
+    dt_model = joblib.load('decision_tree_model.joblib')
+    le_gender = joblib.load('le_gender.joblib')
+    le_education = joblib.load('le_education.joblib')
+    le_paud = joblib.load('le_paud.joblib')
+    model_loaded = True
+    print("Machine learning model loaded successfully")
+except FileNotFoundError:
+    print("Warning: Model files not found. Training new model...")
+    model_loaded = False
+    dt_model = None
+    le_gender = None
+    le_education = None
+    le_paud = None
 
 # Define available options
 gender_classes = ['L', 'P']
@@ -95,73 +115,39 @@ def predict():
         mother_education = request.form['mother_education']
         paud_experience = request.form['paud_experience']
 
-        # Implement new prediction logic based on user feedback
-        readiness_level = "Belum Siap"
-        final_prediction = 0.0
-
-        # Define education level groups
-        basic_education = ['SD', 'SMP']
-        higher_education = ['SMA', 'D3', 'S1', 'S2']
-        s1_s2_education = ['S1', 'S2']
-
-        if age in [5.0, 5.5]:
-            # For age 5/5.5, both parents need S1 or S2
-            father_qualified = father_education in s1_s2_education
-            mother_qualified = mother_education in s1_s2_education
-            
-            if father_qualified and mother_qualified and paud_experience == 'Ya':
-                readiness_level = "Siap"
-                final_prediction = 85.0
-            else:
-                readiness_level = "Belum Siap"
-                final_prediction = 65.0
-
-        elif age == 6.0:
-            # For age 6, different rules based on education levels
-            father_basic = father_education in basic_education
-            mother_basic = mother_education in basic_education
-            father_higher = father_education in higher_education
-            mother_higher = mother_education in higher_education
-
-            if father_higher and mother_higher:
-                # If both parents have SMA or higher
-                readiness_level = "Siap"
-                final_prediction = 85.0
-            elif father_basic and mother_basic:
-                # If both parents have SD or SMP
-                if paud_experience == 'Ya':
-                    readiness_level = "Cukup Siap"
-                    final_prediction = 75.0
-                else:
-                    readiness_level = "Belum Siap"
-                    final_prediction = 65.0
-            else:
-                # Mixed education levels default to higher standard
-                if paud_experience == 'Ya':
-                    readiness_level = "Cukup Siap"
-                    final_prediction = 75.0
-                else:
-                    readiness_level = "Belum Siap"
-                    final_prediction = 65.0
-
-        elif age in [6.5, 7.0]:
-            # For age 6.5/7, any formal education level qualifies
-            father_qualified = father_education in basic_education + higher_education
-            mother_qualified = mother_education in basic_education + higher_education
-            
-            if father_qualified and mother_qualified:
-                if paud_experience == 'Ya':
+        # Use machine learning model if available
+        if model_loaded and dt_model is not None:
+            try:
+                # Encode categorical variables using trained encoders
+                gender_encoded = le_gender.transform([gender])[0]
+                father_education_encoded = le_education.transform([father_education])[0]
+                mother_education_encoded = le_education.transform([mother_education])[0]
+                paud_experience_encoded = le_paud.transform([paud_experience])[0]
+                
+                # Create feature array for prediction
+                features = np.array([[age, gender_encoded, father_education_encoded, 
+                                   mother_education_encoded, paud_experience_encoded]])
+                
+                # Make prediction using the trained model
+                final_prediction = dt_model.predict(features)[0]
+                final_prediction = max(0, min(100, final_prediction))  # Ensure prediction is within valid range
+                
+                # Determine readiness level based on prediction score
+                if final_prediction >= 85:
                     readiness_level = "Siap"
-                    final_prediction = 85.0
-                else:
+                elif final_prediction >= 75:
                     readiness_level = "Cukup Siap"
-                    final_prediction = 75.0
-            else:
-                readiness_level = "Belum Siap"
-                final_prediction = 65.0
+                else:
+                    readiness_level = "Belum Siap"
+                    
+            except ValueError as e:
+                # Handle cases where encoding fails (unknown categories)
+                print(f"Encoding error: {e}")
+                # Fall back to rule-based prediction
+                final_prediction, readiness_level = fallback_prediction(age, gender, father_education, mother_education, paud_experience)
         else:
-            readiness_level = "Belum Siap"
-            final_prediction = 65.0
+            # Use fallback prediction if model not loaded
+            final_prediction, readiness_level = fallback_prediction(age, gender, father_education, mother_education, paud_experience)
 
         # Store prediction data
         prediction_record = {
@@ -188,6 +174,77 @@ def predict():
             'error': str(e)
         })
 
+def fallback_prediction(age, gender, father_education, mother_education, paud_experience):
+    """Fallback prediction logic when ML model is not available"""
+    readiness_level = "Belum Siap"
+    final_prediction = 65.0
+
+    # Define education level groups
+    basic_education = ['SD', 'SMP']
+    higher_education = ['SMA', 'D3', 'S1', 'S2']
+    s1_s2_education = ['S1', 'S2']
+
+    if age in [5.0, 5.5]:
+        # For age 5/5.5, both parents need S1 or S2
+        father_qualified = father_education in s1_s2_education
+        mother_qualified = mother_education in s1_s2_education
+        
+        if father_qualified and mother_qualified and paud_experience == 'Ya':
+            readiness_level = "Siap"
+            final_prediction = 85.0
+        else:
+            readiness_level = "Belum Siap"
+            final_prediction = 65.0
+
+    elif age == 6.0:
+        # For age 6, different rules based on education levels
+        father_basic = father_education in basic_education
+        mother_basic = mother_education in basic_education
+        father_higher = father_education in higher_education
+        mother_higher = mother_education in higher_education
+
+        if father_higher and mother_higher:
+            # If both parents have SMA or higher
+            readiness_level = "Siap"
+            final_prediction = 85.0
+        elif father_basic and mother_basic:
+            # If both parents have SD or SMP
+            if paud_experience == 'Ya':
+                readiness_level = "Cukup Siap"
+                final_prediction = 75.0
+            else:
+                readiness_level = "Belum Siap"
+                final_prediction = 65.0
+        else:
+            # Mixed education levels default to higher standard
+            if paud_experience == 'Ya':
+                readiness_level = "Cukup Siap"
+                final_prediction = 75.0
+            else:
+                readiness_level = "Belum Siap"
+                final_prediction = 65.0
+
+    elif age in [6.5, 7.0]:
+        # For age 6.5/7, any formal education level qualifies
+        father_qualified = father_education in basic_education + higher_education
+        mother_qualified = mother_education in basic_education + higher_education
+        
+        if father_qualified and mother_qualified:
+            if paud_experience == 'Ya':
+                readiness_level = "Siap"
+                final_prediction = 85.0
+            else:
+                readiness_level = "Cukup Siap"
+                final_prediction = 75.0
+        else:
+            readiness_level = "Belum Siap"
+            final_prediction = 65.0
+    else:
+        readiness_level = "Belum Siap"
+        final_prediction = 65.0
+    
+    return final_prediction, readiness_level
+
 @app.route('/export', methods=['GET'])
 @login_required
 def export_predictions():
@@ -195,22 +252,45 @@ def export_predictions():
     if not predictions:
         return jsonify({'success': False, 'error': 'No predictions data available'})
 
-    # Create CSV file with today's date
+    # Create temporary directory for exports if it doesn't exist
+    temp_dir = os.path.join(os.getcwd(), 'temp_exports')
+    os.makedirs(temp_dir, exist_ok=True)
+    
+    # Create CSV file with today's date in temp directory
     today = datetime.now().strftime("%Y%m%d")
     filename = f'prediksi_kesiapan_siswa_{today}.csv'
+    filepath = os.path.join(temp_dir, filename)
     
-    with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['name', 'age', 'gender', 'father_education', 'mother_education', 
-                     'paud_experience', 'prediction', 'readiness_level', 'timestamp']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-        for record in predictions:
-            writer.writerow(record)
+    try:
+        with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
+            fieldnames = ['name', 'age', 'gender', 'father_education', 'mother_education', 
+                         'paud_experience', 'prediction', 'readiness_level', 'timestamp']
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for record in predictions:
+                writer.writerow(record)
 
-    return send_file(filename,
-                    mimetype='text/csv',
-                    as_attachment=True,
-                    download_name=filename)
+        # Send file and clean up afterwards
+        def remove_file(response):
+            try:
+                os.remove(filepath)
+            except OSError:
+                pass
+            return response
+
+        return send_file(filepath,
+                        mimetype='text/csv',
+                        as_attachment=True,
+                        download_name=filename), {'Cache-Control': 'no-cache'}
+    
+    except Exception as e:
+        # Clean up file if it exists
+        if os.path.exists(filepath):
+            try:
+                os.remove(filepath)
+            except OSError:
+                pass
+        return jsonify({'success': False, 'error': f'Error creating export file: {str(e)}'})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
