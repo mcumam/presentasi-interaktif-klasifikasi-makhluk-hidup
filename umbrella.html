@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gambar Payung - Umbrella Drawing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #87CEEB 0%, #E0F6FF 100%);
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .umbrella-svg {
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌂 Gambar Payung 🌂</h1>
+        <svg class="umbrella-svg" width="300" height="350" viewBox="0 0 300 350">
+            <!-- Umbrella canopy -->
+            <path d="M 50 120 Q 50 60 150 60 Q 250 60 250 120 Q 250 140 230 140 Q 210 130 190 130 Q 170 140 150 140 Q 130 140 110 130 Q 90 130 70 140 Q 50 140 50 120 Z" 
+                  fill="#FF6B6B" 
+                  stroke="#E74C3C" 
+                  stroke-width="2"/>
+            
+            <!-- Umbrella segments -->
+            <line x1="150" y1="60" x2="150" y2="140" stroke="#E74C3C" stroke-width="2"/>
+            <line x1="90" y1="80" x2="110" y2="130" stroke="#E74C3C" stroke-width="1"/>
+            <line x1="210" y1="80" x2="190" y2="130" stroke="#E74C3C" stroke-width="1"/>
+            <line x1="120" y1="70" x2="130" y2="135" stroke="#E74C3C" stroke-width="1"/>
+            <line x1="180" y1="70" x2="170" y2="135" stroke="#E74C3C" stroke-width="1"/>
+            
+            <!-- Umbrella handle -->
+            <line x1="150" y1="140" x2="150" y2="280" stroke="#8B4513" stroke-width="8" stroke-linecap="round"/>
+            
+            <!-- Umbrella handle curve -->
+            <path d="M 150 280 Q 130 300 110 300 Q 90 300 90 280" 
+                  fill="none" 
+                  stroke="#8B4513" 
+                  stroke-width="8" 
+                  stroke-linecap="round"/>
+            
+            <!-- Decorative elements -->
+            <circle cx="150" cy="65" r="3" fill="#FFD700"/>
+            <circle cx="120" cy="75" r="2" fill="#FFD700"/>
+            <circle cx="180" cy="75" r="2" fill="#FFD700"/>
+            <circle cx="90" cy="90" r="2" fill="#FFD700"/>
+            <circle cx="210" cy="90" r="2" fill="#FFD700"/>
+            
+            <!-- Water drops -->
+            <ellipse cx="80" cy="160" rx="3" ry="8" fill="#4A90E2" opacity="0.7"/>
+            <ellipse cx="220" cy="170" rx="3" ry="8" fill="#4A90E2" opacity="0.7"/>
+            <ellipse cx="60" cy="180" rx="2" ry="6" fill="#4A90E2" opacity="0.6"/>
+            <ellipse cx="240" cy="185" rx="2" ry="6" fill="#4A90E2" opacity="0.6"/>
+        </svg>
+        
+        <p style="margin-top: 20px; color: #666; font-style: italic;">
+            A beautiful red umbrella to keep you dry! 🌧️
+        </p>
+    </div>
+</body>
+</html>
